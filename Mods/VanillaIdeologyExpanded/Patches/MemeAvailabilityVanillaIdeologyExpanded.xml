@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Patch>
+  <!-- Node Research advances the colony through explicit Emergence projects. Its
+       Emergence defs are generated at startup, so reference the project by name. -->
+  <Operation Class="PatchOperationAddModExtension" MayRequire="ferny.noderesearch">
+    <xpath>Defs/MemeDef[defName="VME_Aristocratic" or defName="VME_Royal"]</xpath>
+    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><requiredResearchDefNames><li>BRM_Emergence_Medieval</li></requiredResearchDefNames></li></value>
+  </Operation>
   <Operation Class="PatchOperationAddModExtension">
     <xpath>Defs/MemeDef[defName="VME_HardcoreIndustrialism"]</xpath>
     <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><requiredResearch><li>Electricity</li></requiredResearch></li></value>

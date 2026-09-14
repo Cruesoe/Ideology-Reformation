@@ -10,7 +10,7 @@ namespace IdeologyReformation.Patches;
 
 /// <summary>
 /// Includes research-gated memes in the research project's ordinary "Unlocks" list.
-/// This is derived from <see cref="MemeAvailabilityExtension.requiredResearch"/> so
+/// This is derived from the research fields on <see cref="MemeAvailabilityExtension"/> so
 /// compatibility XML remains the single source of truth for both enforcement and UI.
 /// </summary>
 [HarmonyPatch(typeof(ResearchProjectDef), nameof(ResearchProjectDef.UnlockedDefs), MethodType.Getter)]
@@ -20,7 +20,12 @@ internal static class ResearchMemeUnlockDisplayPatch
     private static void Postfix(ResearchProjectDef __instance, List<Def> __result)
     {
         IEnumerable<MemeDef> unlockedMemes = DefDatabase<MemeDef>.AllDefsListForReading
-            .Where(meme => meme.GetModExtension<MemeAvailabilityExtension>()?.requiredResearch?.Contains(__instance) == true)
+            .Where(meme =>
+            {
+                MemeAvailabilityExtension? restriction = meme.GetModExtension<MemeAvailabilityExtension>();
+                return restriction?.requiredResearch?.Contains(__instance) == true
+                    || restriction?.requiredResearchDefNames?.Contains(__instance.defName) == true;
+            })
             .OrderBy(meme => meme.label);
 
         foreach (MemeDef meme in unlockedMemes)

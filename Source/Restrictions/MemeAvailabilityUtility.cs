@@ -32,17 +32,26 @@ public static class MemeAvailabilityUtility
             }
         }
 
-        if (restriction.requiredResearch is { Count: > 0 })
-        {
-            List<string> missing = restriction.requiredResearch
-                .Where(project => !project.IsFinished)
-                .Select(project => project.LabelCap.ToString())
-                .ToList();
+        List<string> missing = restriction.requiredResearch?
+            .Where(project => !project.IsFinished)
+            .Select(project => project.LabelCap.ToString())
+            .ToList() ?? new List<string>();
 
-            if (missing.Count > 0)
-            {
-                return "FIO_MemeLockedResearch".Translate(missing.ToCommaList(useAnd: true));
-            }
+        if (restriction.requiredResearchDefNames is { Count: > 0 })
+        {
+            missing.AddRange(restriction.requiredResearchDefNames
+                .Select(defName => new
+                {
+                    DefName = defName,
+                    Project = DefDatabase<ResearchProjectDef>.GetNamedSilentFail(defName)
+                })
+                .Where(requirement => requirement.Project == null || !requirement.Project.IsFinished)
+                .Select(requirement => requirement.Project?.LabelCap.ToString() ?? requirement.DefName));
+        }
+
+        if (missing.Count > 0)
+        {
+            return "FIO_MemeLockedResearch".Translate(missing.Distinct().ToList().ToCommaList(useAnd: true));
         }
 
         return null;

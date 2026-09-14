@@ -8,7 +8,7 @@ Ideology Reformation makes selected memes become available as your colony advanc
 [*][b]Available immediately[/b] — Ideology Reformation adds no progression requirement. The relevant DLC or content mod must still be enabled.
 [/list]
 
-[i]Current coverage: 133 memes and structures from 11 supported sources; 50 have progression requirements and 83 are available immediately.[/i]
+[i]Current coverage: 133 memes and structures from 11 supported sources; 52 have progression requirements and 81 are available immediately.[/i]
 
 [h2]Core Ideology[/h2]
 
@@ -175,6 +175,7 @@ Ideology Reformation makes selected memes become available as your colony advanc
 
 [b]Progression unlocks[/b]
 [list]
+[*][b]Aristocratic[/b] — Research: Medieval Emergence (when Node Research is enabled)
 [*][b]City builders[/b] — Research: Complex furniture
 [*][b]Fleshcrafting[/b] — Research: Biosculpting
 [*][b]Healthcare[/b] — Research: Hospital beds
@@ -182,13 +183,13 @@ Ideology Reformation makes selected memes become available as your colony advanc
 [*][b]Mechanoid supremacy[/b] — Research: Fabrication
 [*][b]Party life[/b] — Research: Beer brewing
 [*][b]Progressive[/b] — Research: Fabrication
+[*][b]Royal[/b] — Research: Medieval Emergence (when Node Research is enabled)
 [*][b]Scrapper[/b] — Research: Machining
 [/list]
 
 [b]Available immediately[/b]
 [list]
 [*]Anonymity
-[*]Aristocratic
 [*]Astrology
 [*]Blood court
 [*]Bushido
@@ -210,7 +211,6 @@ Ideology Reformation makes selected memes become available as your colony advanc
 [*]Pacifist
 [*]Psychic focus
 [*]Republic
-[*]Royal
 [*]Sweet teeth
 [*]Trader
 [*]Vegan

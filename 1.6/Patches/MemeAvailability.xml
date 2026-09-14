@@ -8,8 +8,11 @@
   Supported fields:
     minTechLevel     The colony's effective tech level must be at least this.
     requiredResearch Every listed ResearchProjectDef must be finished.
+    requiredResearchDefNames
+                     Every project named here must be finished. Use this for
+                     research defs generated after XML cross-reference resolution.
 
-  Either field can be used alone. When both are present, both requirements
+  Any field can be used alone. When several are present, every requirement
   must be met. Other mods can use the same extension on their own MemeDefs.
 -->
 <Patch>

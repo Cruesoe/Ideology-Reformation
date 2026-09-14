@@ -17,4 +17,11 @@ public class MemeAvailabilityExtension : DefModExtension
 
     /// <summary>Meme requires all of these research projects to be finished. Leave null/empty for none.</summary>
     public List<ResearchProjectDef>? requiredResearch;
+
+    /// <summary>
+    /// Meme requires all research projects with these def names to be finished. This supports
+    /// projects generated after XML cross-reference resolution, such as Node Research's
+    /// Emergence projects.
+    /// </summary>
+    public List<string>? requiredResearchDefNames;
 }

@@ -177,6 +177,7 @@ function Get-ActiveLoadFolders {
 $researchLabels = @{
     AdvancedPsychicRituals = 'Advanced psychic rituals'
     BasicPsychicRituals    = 'Basic psychic rituals'
+    BRM_Emergence_Medieval = 'Medieval Emergence'
     Biosculpting           = 'Biosculpting'
     Brewing                = 'Beer brewing'
     ComplexFurniture       = 'Complex furniture'
@@ -198,6 +199,10 @@ $researchLabels = @{
     Stonecutting           = 'Stonecutting'
     TreeSowing             = 'Tree sowing'
     VVE_BasicVehicles      = 'Basic vehicles'
+}
+
+$conditionalRequirementLabels = @{
+    'ferny.noderesearch' = 'Node Research'
 }
 
 $unlockConditions = @{}
@@ -228,6 +233,11 @@ foreach ($availabilityFile in $availabilityFiles) {
                 ForEach-Object { $_.InnerText.Trim() } |
                 Where-Object { $_ }
         )
+        $research += @(
+            $extension.SelectNodes('requiredResearchDefNames/li') |
+                ForEach-Object { $_.InnerText.Trim() } |
+                Where-Object { $_ }
+        )
 
         if ($minimumTech) {
             $condition = "Tech level: $minimumTech"
@@ -245,6 +255,11 @@ foreach ($availabilityFile in $availabilityFiles) {
         }
         else {
             $condition = 'Unrestricted'
+        }
+
+        $mayRequire = $operation.GetAttribute('MayRequire').ToLowerInvariant()
+        if ($mayRequire -and $conditionalRequirementLabels.ContainsKey($mayRequire)) {
+            $condition += " (when $($conditionalRequirementLabels[$mayRequire]) is enabled)"
         }
 
         $findModOperation = $operation.SelectSingleNode('ancestor::Operation[@Class="PatchOperationFindMod"][1]')
