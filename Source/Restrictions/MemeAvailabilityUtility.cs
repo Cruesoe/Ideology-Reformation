@@ -17,7 +17,7 @@ public static class MemeAvailabilityUtility
     public static string? LockedReason(MemeDef meme)
     {
         MemeAvailabilityExtension? restriction = meme.GetModExtension<MemeAvailabilityExtension>();
-        if (restriction == null)
+        if (restriction == null || TitleScreenEditorSupport.IsEditingFromTitleScreen())
         {
             return null;
         }
