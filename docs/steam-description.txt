@@ -1,0 +1,29 @@
+[b]Let your colony's beliefs grow one tradition at a time.[/b]
+
+Ideology Reformation makes Fluid ideoligion reforms smaller, clearer and more meaningful.
+
+[b]Features[/b]
+[list]
+[*]Make one deliberate gameplay change per reform.
+[*]Add or remove a meme, change a precept or structure, or edit one ritual or role.
+[*]Freely change names, colours, icons and styles.
+[*]Review every change before spending development points.
+[*]Go back or reset without consequences.
+[*]Preserves compatible precepts when memes change.
+[*]Unlock selected memes through research.
+[*]Research projects show which memes they unlock.
+[/list]
+
+[b]Compatibility[/b]
+[list]
+[*]Alpha Memes
+[*]Vanilla Ideology Expanded
+[*]Vanilla Vehicles Expanded and Vanilla Genetics Expanded
+[*]Biotech, Anomaly and Odyssey memes
+[*]Xenotype And Ideology Buttons TitleScreen: every meme can be picked in its main-menu Ideology creator
+[*]Existing saves
+[/list]
+
+Only Fluid ideoligions are affected. Fixed ideoligions keep vanilla behaviour.
+
+See the discussion for the memes affected so far. You're welcome to suggest changes and additions.
