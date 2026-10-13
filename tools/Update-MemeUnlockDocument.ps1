@@ -208,7 +208,7 @@ $conditionalRequirementLabels = @{
 $unlockConditions = @{}
 $availabilityClass = 'IdeologyReformation.Restrictions.MemeAvailabilityExtension'
 $availabilityFiles = @(
-    Get-ChildItem -LiteralPath (Join-Path $repoRoot '1.6\Patches') -Recurse -File -Filter '*.xml' -ErrorAction SilentlyContinue
+    Get-ChildItem -LiteralPath (Join-Path $repoRoot 'Common\Patches') -Recurse -File -Filter '*.xml' -ErrorAction SilentlyContinue
     Get-ChildItem -LiteralPath (Join-Path $repoRoot 'Mods') -Recurse -File -Filter '*.xml' -ErrorAction SilentlyContinue
 ) | Where-Object {
     Select-String -LiteralPath $_.FullName -SimpleMatch $availabilityClass -Quiet
