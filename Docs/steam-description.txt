@@ -1,29 +1,25 @@
 [b]Let your colony's beliefs grow one tradition at a time.[/b]
 
-Ideology Reformation makes Fluid ideoligion reforms smaller, clearer and more meaningful.
+Ideology Reformation makes Fluid ideoligion reforms smaller, clearer and more meaningful. See the discussion for the memes affected so far; you're welcome to suggest changes and additions.
 
-[b]Features[/b]
+[h2]Features[/h2]
 [list]
-[*]Make one deliberate gameplay change per reform.
-[*]Add or remove a meme, change a precept or structure, or edit one ritual or role.
-[*]Freely change names, colours, icons and styles.
-[*]Review every change before spending development points.
-[*]Go back or reset without consequences.
-[*]Preserves compatible precepts when memes change.
-[*]Unlock selected memes through research.
+[*]Each reform makes one deliberate gameplay change.
+[*]A reform can add or remove a meme, change a precept or structure, or edit one ritual or role.
+[*]Names, colors, icons and styles can be changed freely.
+[*]Every change can be reviewed before spending development points.
+[*]You can go back or reset without consequences.
+[*]Compatible precepts are kept when memes change.
+[*]Selected memes are unlocked through research.
 [*]Research projects show which memes they unlock.
+[*]Only Fluid ideoligions are affected; Fixed ideoligions keep vanilla behavior.
 [/list]
 
-[b]Compatibility[/b]
+[h2]Settings[/h2]
 [list]
-[*]Alpha Memes
-[*]Vanilla Ideology Expanded
-[*]Vanilla Vehicles Expanded and Vanilla Genetics Expanded
-[*]Biotech, Anomaly and Odyssey memes
-[*]Xenotype And Ideology Buttons TitleScreen: every meme can be picked in its main-menu Ideology creator
-[*]Existing saves
+[*][b]Use highest researched tech level[/b]: uses the highest tech level among completed research instead of the colony's actual tech level. On by default, or off when Node Research is active.
 [/list]
 
-Only Fluid ideoligions are affected. Fixed ideoligions keep vanilla behaviour.
-
-See the discussion for the memes affected so far. You're welcome to suggest changes and additions.
+[h2]Compatibility[/h2]
+Works with Alpha Memes, Vanilla Ideology Expanded, Vanilla Vehicles Expanded, Vanilla Genetics Expanded, and the Biotech, Anomaly and Odyssey memes. With Xenotype And Ideology Buttons TitleScreen, every meme can be picked in its main-menu Ideology creator.
+Safe to add to an existing save.
