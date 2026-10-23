@@ -15,11 +15,6 @@ Ideology Reformation makes Fluid ideoligion reforms smaller, clearer and more me
 [*]Only Fluid ideoligions are affected; Fixed ideoligions keep vanilla behavior.
 [/list]
 
-[h2]Settings[/h2]
-[list]
-[*][b]Use highest researched tech level[/b]: uses the highest tech level among completed research instead of the colony's actual tech level. On by default, or off when Node Research is active.
-[/list]
-
 [h2]Compatibility[/h2]
 Works with Alpha Memes, Vanilla Ideology Expanded, Vanilla Vehicles Expanded, Vanilla Genetics Expanded, and the Biotech, Anomaly and Odyssey memes. With Xenotype And Ideology Buttons TitleScreen, every meme can be picked in its main-menu Ideology creator.
 Safe to add to an existing save.
