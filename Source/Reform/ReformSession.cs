@@ -45,6 +45,21 @@ internal sealed class ReformSession
         return false;
     }
 
+    public void RefreshSelection(Precept precept)
+    {
+        if (SelectedObject == null || SelectedObject.Kind is not (ReformObjectKind.Ritual or ReformObjectKind.Relic))
+        {
+            return;
+        }
+
+        ReformObject current = ReformObject.ForPrecept(precept);
+        if (SelectedObject.Kind == current.Kind && SelectedObject.Key.EndsWith(":-1"))
+        {
+            SelectedObject = current;
+            Diagnostics.Message($"Re-keyed reform object to {current.Key}");
+        }
+    }
+
     public bool CanConfigureMemeConsequence(Precept precept)
     {
         if (SelectedObject?.Kind != ReformObjectKind.Meme || precept.def.issue == null)

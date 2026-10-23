@@ -20,7 +20,16 @@ internal static class PreceptMutationPatches
 
     [HarmonyPatch(typeof(Ideo), nameof(Ideo.AddPrecept))]
     [HarmonyPostfix]
-    private static void AddPreceptPostfix(bool __state) => EndMutation(__state);
+    private static void AddPreceptPostfix(Ideo __instance, Precept precept, bool __state)
+    {
+        // A new ritual or relic is keyed by ID, which Init assigns during the add.
+        if (__state && ReformSessions.TryGet(__instance, out ReformSession session))
+        {
+            session.RefreshSelection(precept);
+        }
+
+        EndMutation(__state);
+    }
 
     [HarmonyPatch(typeof(Ideo), nameof(Ideo.AddPrecept))]
     [HarmonyFinalizer]
