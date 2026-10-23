@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <FIO_FluidModeDescription>Begin with one belief, then reshape your ideoligion one tradition at a time as the colony grows and discovers new ideas.</FIO_FluidModeDescription>
-  <FIO_ActionAdd>add</FIO_ActionAdd>
-  <FIO_ActionRemove>remove</FIO_ActionRemove>
-  <FIO_ObjectMeme>Meme: {0} {1}</FIO_ObjectMeme>
-  <FIO_ObjectStructure>Structure: {0}</FIO_ObjectStructure>
-  <FIO_ObjectPrecept>Precept: {0}</FIO_ObjectPrecept>
-  <FIO_ObjectRitual>Ritual: {0}</FIO_ObjectRitual>
-  <FIO_ObjectRole>Role: {0}</FIO_ObjectRole>
-  <FIO_ObjectRelic>Relic: {0}</FIO_ObjectRelic>
-  <FIO_ObjectBuilding>Building: {0}</FIO_ObjectBuilding>
-  <FIO_AnotherObjectLocked>This reform is locked to {0}. Reset or confirm it before changing another mechanical object.</FIO_AnotherObjectLocked>
-  <FIO_OneMemeAtATime>Adding and removing memes are separate reforms. Choose exactly one meme change.</FIO_OneMemeAtATime>
-  <FIO_NoObjectSelected>No mechanical reform object selected. Cosmetic edits remain free.</FIO_NoObjectSelected>
-  <FIO_SelectedObject>Selected reform object: {0}. Other deliberate objects are locked.</FIO_SelectedObject>
-  <FIO_LockedMemeTip>This reform is locked to {0}. This meme cannot be added or removed until the reform is reset or confirmed.</FIO_LockedMemeTip>
-  <FIO_MemeLockedResearch>Locked until researched: {0}.</FIO_MemeLockedResearch>
-  <FIO_ResearchUnlockMeme>Meme: {0}</FIO_ResearchUnlockMeme>
-  <FIO_ResetComplete>All reform changes were discarded.</FIO_ResetComplete>
-  <FIO_ReviewTitle>Review ideology reform</FIO_ReviewTitle>
-  <FIO_PrimaryChange>Memes changed</FIO_PrimaryChange>
-  <FIO_Consequences>Precepts changed</FIO_Consequences>
-  <FIO_NoConsequences>No additional ideology objects will be added or removed.</FIO_NoConsequences>
-  <FIO_CosmeticOnly>Cosmetic changes only</FIO_CosmeticOnly>
-  <FIO_CosmeticChanges>Cosmetic changes</FIO_CosmeticChanges>
-  <FIO_GoBack>Go back</FIO_GoBack>
-  <FIO_ConfirmReform>Confirm reform</FIO_ConfirmReform>
-  <FIO_NameChanged>Name: {0} to {1}</FIO_NameChanged>
-  <FIO_DescriptionChanged>Description edited</FIO_DescriptionChanged>
-  <FIO_NarrativeTermsChanged>Adjective or member name edited</FIO_NarrativeTermsChanged>
-  <FIO_IconColorChanged>Icon or colour edited</FIO_IconColorChanged>
-  <FIO_LeaderTitlesChanged>Leader titles edited</FIO_LeaderTitlesChanged>
-  <FIO_StylesChanged>Ideology styles edited</FIO_StylesChanged>
-  <FIO_PreceptNameChanged>Renamed {0} to {1}</FIO_PreceptNameChanged>
-  <FIO_LetterTextReformIdeo>{0} is ready to reform!\n\nYou may make one gameplay change: add or remove a meme, change the structure or one precept, or edit one ritual or role. Settings belonging to the same ritual or role can be changed together.\n\nNames, descriptions, colours, icons and styles can be changed freely. Any changes required by your chosen meme won’t count against your reform.\n\nYou’ll review everything before spending your development points, and you can go back or reset your changes.\n\nOpen {0} in the Ideoligions tab to begin.{1}</FIO_LetterTextReformIdeo>
-  <FIO_NewlyAvailableMemes>\n\nNew memes available: {0}.</FIO_NewlyAvailableMemes>
+  <IR_FluidModeDescription>Begin with one belief, then reshape your ideoligion one tradition at a time as the colony grows and discovers new ideas.</IR_FluidModeDescription>
+  <IR_ActionAdd>add</IR_ActionAdd>
+  <IR_ActionRemove>remove</IR_ActionRemove>
+  <IR_ObjectMeme>Meme: {0} {1}</IR_ObjectMeme>
+  <IR_ObjectStructure>Structure: {0}</IR_ObjectStructure>
+  <IR_ObjectPrecept>Precept: {0}</IR_ObjectPrecept>
+  <IR_ObjectRitual>Ritual: {0}</IR_ObjectRitual>
+  <IR_ObjectRole>Role: {0}</IR_ObjectRole>
+  <IR_ObjectRelic>Relic: {0}</IR_ObjectRelic>
+  <IR_ObjectBuilding>Building: {0}</IR_ObjectBuilding>
+  <IR_AnotherObjectLocked>This reform is locked to {0}. Reset or confirm it before changing another mechanical object.</IR_AnotherObjectLocked>
+  <IR_OneMemeAtATime>Adding and removing memes are separate reforms. Choose exactly one meme change.</IR_OneMemeAtATime>
+  <IR_NoObjectSelected>No mechanical reform object selected. Cosmetic edits remain free.</IR_NoObjectSelected>
+  <IR_SelectedObject>Selected reform object: {0}. Other deliberate objects are locked.</IR_SelectedObject>
+  <IR_LockedMemeTip>This reform is locked to {0}. This meme cannot be added or removed until the reform is reset or confirmed.</IR_LockedMemeTip>
+  <IR_MemeLockedResearch>Locked until researched: {0}.</IR_MemeLockedResearch>
+  <IR_ResearchUnlockMeme>Meme: {0}</IR_ResearchUnlockMeme>
+  <IR_ResetComplete>All reform changes were discarded.</IR_ResetComplete>
+  <IR_ReviewTitle>Review ideology reform</IR_ReviewTitle>
+  <IR_PrimaryChange>Memes changed</IR_PrimaryChange>
+  <IR_Consequences>Precepts changed</IR_Consequences>
+  <IR_PreceptRemoved>Removed</IR_PreceptRemoved>
+  <IR_NoConsequences>No additional ideology objects will be added or removed.</IR_NoConsequences>
+  <IR_CosmeticOnly>Cosmetic changes only</IR_CosmeticOnly>
+  <IR_CosmeticChanges>Cosmetic changes</IR_CosmeticChanges>
+  <IR_GoBack>Go back</IR_GoBack>
+  <IR_ConfirmReform>Confirm reform</IR_ConfirmReform>
+  <IR_NameChanged>Name: {0} to {1}</IR_NameChanged>
+  <IR_DescriptionChanged>Description edited</IR_DescriptionChanged>
+  <IR_NarrativeTermsChanged>Adjective or member name edited</IR_NarrativeTermsChanged>
+  <IR_IconColorChanged>Icon or color edited</IR_IconColorChanged>
+  <IR_LeaderTitlesChanged>Leader titles edited</IR_LeaderTitlesChanged>
+  <IR_StylesChanged>Ideology styles edited</IR_StylesChanged>
+  <IR_PreceptNameChanged>Renamed {0} to {1}</IR_PreceptNameChanged>
+  <IR_LetterTextReformIdeo>{0} is ready to reform!\n\nYou may make one gameplay change: add or remove a meme, change the structure or one precept, or edit one ritual or role. Settings belonging to the same ritual or role can be changed together.\n\nNames, descriptions, colors, icons and styles can be changed freely. Any changes required by your chosen meme won’t count against your reform.\n\nYou’ll review everything before spending your development points, and you can go back or reset your changes.\n\nOpen {0} in the Ideoligions tab to begin.{1}</IR_LetterTextReformIdeo>
+  <IR_NewlyAvailableMemes>\n\nNew memes available: {0}.</IR_NewlyAvailableMemes>
 </LanguageData>

@@ -40,7 +40,7 @@ public static class MemeAvailabilityUtility
 
         if (missing.Count > 0)
         {
-            return "FIO_MemeLockedResearch".Translate(missing.Distinct().ToList().ToCommaList(useAnd: true));
+            return "IR_MemeLockedResearch".Translate(missing.Distinct().ToList().ToCommaList(useAnd: true));
         }
 
         return null;

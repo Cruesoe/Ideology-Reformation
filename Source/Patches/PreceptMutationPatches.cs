@@ -22,7 +22,7 @@ internal static class PreceptMutationPatches
     [HarmonyPostfix]
     private static void AddPreceptPostfix(Ideo __instance, Precept precept, bool __state)
     {
-        // A new ritual or relic is keyed by ID, which Init assigns during the add.
+        // A new ritual, relic or building is keyed by ID, which Init assigns during the add.
         if (__state && ReformSessions.TryGet(__instance, out ReformSession session))
         {
             session.RefreshSelection(precept);
@@ -105,7 +105,7 @@ internal static class DetailedPreceptEditPatch
     [HarmonyPrefix]
     private static bool Prefix(Dialog_EditPrecept __instance)
     {
-        Precept precept = (Precept)PreceptField.GetValue(__instance);
+        Precept precept = (Precept)PreceptField.GetValue(__instance)!;
         if (!ReformSessions.TryGet(precept.ideo, out ReformSession session) || !HasMechanicalChanges(__instance, precept, session))
         {
             return true;
@@ -125,8 +125,8 @@ internal static class DetailedPreceptEditPatch
     {
         if (precept is Precept_Ritual ritual)
         {
-            bool newAnytime = (bool)NewAnytimeField.GetValue(dialog);
-            int newDate = (int)NewDateField.GetValue(dialog);
+            bool newAnytime = (bool)NewAnytimeField.GetValue(dialog)!;
+            int newDate = (int)NewDateField.GetValue(dialog)!;
             RitualAttachableOutcomeEffectDef? reward = (RitualAttachableOutcomeEffectDef?)RewardField.GetValue(dialog);
             RitualObligationTrigger_Date? trigger = ritual.obligationTriggers.OfType<RitualObligationTrigger_Date>().FirstOrDefault();
             if (newAnytime != ritual.isAnytime || reward != ritual.attachableOutcomeEffect || (trigger != null && newDate != trigger.triggerDaysSinceStartOfYear))

@@ -14,7 +14,7 @@ public sealed class IdeologyReformationMod : Mod
         ReflectionSupport.EnsureFieldLookupsResolved();
         FluidIdeologyDescriptionPatch.ApplyAfterLoading();
 #if DEBUG
-        Log.Message("[Ideology Reformation] Phase 1 loaded.");
+        Log.Message("[Ideology Reformation] Loaded.");
 #endif
     }
 }

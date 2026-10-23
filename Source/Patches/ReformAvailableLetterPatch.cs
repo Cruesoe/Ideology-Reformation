@@ -9,7 +9,7 @@ using IdeologyReformation.Restrictions;
 namespace IdeologyReformation.Patches;
 
 /// <summary>
-/// Replaces vanilla's "you can reform your ideoligion" letter with FIO's own text, and appends
+/// Replaces vanilla's "you can reform your ideoligion" letter with this mod's own text, and appends
 /// a note listing memes that became available (per <see cref="MemeAvailabilityTracker"/>) since
 /// the last such letter for any ideo in this save.
 /// </summary>
@@ -33,7 +33,7 @@ internal static class ReformAvailableLetterPatch
             string newMemesText = BuildNewlyAvailableMemesText();
             Find.LetterStack.ReceiveLetter(
                 "LetterLabelReformIdeo".Translate(),
-                "FIO_LetterTextReformIdeo".Translate(__instance.ideo.name, newMemesText),
+                "IR_LetterTextReformIdeo".Translate(__instance.ideo.name, newMemesText),
                 LetterDefOf.PositiveEvent);
         }
 
@@ -56,6 +56,6 @@ internal static class ReformAvailableLetterPatch
         }
 
         string memeList = string.Join(", ", newlyAvailable.Select(m => m.LabelCap));
-        return "FIO_NewlyAvailableMemes".Translate(memeList);
+        return "IR_NewlyAvailableMemes".Translate(memeList);
     }
 }

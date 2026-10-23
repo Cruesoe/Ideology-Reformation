@@ -9,7 +9,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $repoRoot = Split-Path -Parent $PSScriptRoot
 if (-not $OutputPath) {
-    $OutputPath = Join-Path $repoRoot 'docs\STEAM_DISCUSSION_MEME_UNLOCKS.txt'
+    $OutputPath = Join-Path $repoRoot 'Docs\STEAM_DISCUSSION_MEME_UNLOCKS.txt'
 }
 
 function Get-XmlFile {
@@ -364,7 +364,6 @@ $lines.Add('Ideology Reformation makes selected memes become available as your c
 $lines.Add('')
 $lines.Add('[list]')
 $lines.Add('[*][b]Research requirement[/b] — complete the named research project.')
-$lines.Add('[*][b]Tech-level requirement[/b] — advance the colony to at least that technology level.')
 $lines.Add('[*][b]Available immediately[/b] — Ideology Reformation adds no progression requirement. The relevant DLC or content mod must still be enabled.')
 $lines.Add('[/list]')
 $lines.Add('')

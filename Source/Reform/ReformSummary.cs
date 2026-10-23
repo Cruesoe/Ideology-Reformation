@@ -11,6 +11,7 @@ internal sealed class ReformSummary
     public List<Precept> PrimaryPreceptCards { get; } = new();
     public List<Precept> ConsequencePreceptCards { get; } = new();
     public List<Precept> PreceptCards { get; } = new();
+    public HashSet<int> RemovedPreceptIds { get; } = new();
     public List<string> CosmeticChanges { get; } = new();
     public bool HasMechanicalObject { get; private set; }
 
@@ -44,6 +45,7 @@ internal sealed class ReformSummary
         }
 
         BuildPreceptCards(summary, workingPrecepts);
+        summary.RemovedPreceptIds.UnionWith(summary.PreceptCards.Where(p => !workingIds.Contains(p.Id)).Select(p => p.Id));
         AddCosmeticDetails(summary, session.Original, session.Working);
         return summary;
     }
@@ -133,27 +135,27 @@ internal sealed class ReformSummary
     {
         if (original.name != working.name)
         {
-            summary.CosmeticChanges.Add("FIO_NameChanged".Translate(original.name, working.name));
+            summary.CosmeticChanges.Add("IR_NameChanged".Translate(original.name, working.name));
         }
         if (original.description != working.description)
         {
-            summary.CosmeticChanges.Add("FIO_DescriptionChanged".Translate());
+            summary.CosmeticChanges.Add("IR_DescriptionChanged".Translate());
         }
         if (original.adjective != working.adjective || original.memberName != working.memberName)
         {
-            summary.CosmeticChanges.Add("FIO_NarrativeTermsChanged".Translate());
+            summary.CosmeticChanges.Add("IR_NarrativeTermsChanged".Translate());
         }
         if (original.iconDef != working.iconDef || original.colorDef != working.colorDef)
         {
-            summary.CosmeticChanges.Add("FIO_IconColorChanged".Translate());
+            summary.CosmeticChanges.Add("IR_IconColorChanged".Translate());
         }
         if (original.leaderTitleMale != working.leaderTitleMale || original.leaderTitleFemale != working.leaderTitleFemale)
         {
-            summary.CosmeticChanges.Add("FIO_LeaderTitlesChanged".Translate());
+            summary.CosmeticChanges.Add("IR_LeaderTitlesChanged".Translate());
         }
         if (!original.thingStyleCategories.SetsEqual(working.thingStyleCategories))
         {
-            summary.CosmeticChanges.Add("FIO_StylesChanged".Translate());
+            summary.CosmeticChanges.Add("IR_StylesChanged".Translate());
         }
 
         Dictionary<int, Precept> byId = working.PreceptsListForReading.ToDictionary(p => p.Id);
@@ -161,7 +163,7 @@ internal sealed class ReformSummary
         {
             if (byId.TryGetValue(before.Id, out Precept? after) && before.Label != after.Label)
             {
-                summary.CosmeticChanges.Add("FIO_PreceptNameChanged".Translate(before.Label, after.Label));
+                summary.CosmeticChanges.Add("IR_PreceptNameChanged".Translate(before.Label, after.Label));
             }
         }
     }

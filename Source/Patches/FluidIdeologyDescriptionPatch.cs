@@ -15,7 +15,7 @@ internal static class FluidIdeologyDescriptionPatch
         IdeoPresetCategoryDef? fluid = DefDatabase<IdeoPresetCategoryDef>.GetNamedSilentFail("Fluid");
         if (fluid != null)
         {
-            fluid.description = "FIO_FluidModeDescription".Translate();
+            fluid.description = "IR_FluidModeDescription".Translate();
         }
     }
 }
