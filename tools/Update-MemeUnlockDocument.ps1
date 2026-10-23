@@ -227,7 +227,6 @@ foreach ($availabilityFile in $availabilityFiles) {
         }
 
         $xpath = Get-NodeText -Node $operation -XPath 'xpath'
-        $minimumTech = Get-NodeText -Node $extension -XPath 'minTechLevel'
         $research = @(
             $extension.SelectNodes('requiredResearch/li') |
                 ForEach-Object { $_.InnerText.Trim() } |
@@ -239,10 +238,7 @@ foreach ($availabilityFile in $availabilityFiles) {
                 Where-Object { $_ }
         )
 
-        if ($minimumTech) {
-            $condition = "Tech level: $minimumTech"
-        }
-        elseif ($research.Count -gt 0) {
+        if ($research.Count -gt 0) {
             $researchNames = foreach ($researchDefName in $research) {
                 if ($researchLabels.ContainsKey($researchDefName)) {
                     $researchLabels[$researchDefName]

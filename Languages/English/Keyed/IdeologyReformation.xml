@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <FIO_Title>Ideology Reformation</FIO_Title>
   <FIO_FluidModeDescription>Begin with one belief, then reshape your ideoligion one tradition at a time as the colony grows and discovers new ideas.</FIO_FluidModeDescription>
-  <FIO_TechSourceHighestResearched>Use highest researched tech level instead of actual tech level</FIO_TechSourceHighestResearched>
-  <FIO_TechSourceHighestResearchedTip>When enabled, the highest tech level among completed research projects is used instead of the colony's actual tech level. This is the default, since the colony's actual tech level is normally fixed for the whole playthrough. If Node Research is active, the actual tech level is used by default instead, since that mod makes actual tech level the more meaningful measure.</FIO_TechSourceHighestResearchedTip>
-  <FIO_CurrentTechLevel>Current tech level: {0}</FIO_CurrentTechLevel>
-  <FIO_TechLevelUnavailable>unavailable outside an active game</FIO_TechLevelUnavailable>
   <FIO_ActionAdd>add</FIO_ActionAdd>
   <FIO_ActionRemove>remove</FIO_ActionRemove>
   <FIO_ObjectMeme>Meme: {0} {1}</FIO_ObjectMeme>
@@ -22,7 +17,6 @@
   <FIO_LockedMemeTip>This reform is locked to {0}. This meme cannot be added or removed until the reform is reset or confirmed.</FIO_LockedMemeTip>
   <FIO_MemeLockedResearch>Locked until researched: {0}.</FIO_MemeLockedResearch>
   <FIO_ResearchUnlockMeme>Meme: {0}</FIO_ResearchUnlockMeme>
-  <FIO_MemeLockedTechLevel>Locked until the colony reaches {0} tech level.</FIO_MemeLockedTechLevel>
   <FIO_ResetComplete>All reform changes were discarded.</FIO_ResetComplete>
   <FIO_ReviewTitle>Review ideology reform</FIO_ReviewTitle>
   <FIO_PrimaryChange>Memes changed</FIO_PrimaryChange>
