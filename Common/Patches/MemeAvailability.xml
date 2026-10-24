@@ -6,7 +6,6 @@
   rebalance an unlock, edit only this file; no C# rebuild is required.
 
   Supported fields:
-    minTechLevel     The colony's effective tech level must be at least this.
     requiredResearch Every listed ResearchProjectDef must be finished.
     requiredResearchDefNames
                      Every project named here must be finished. Use this for
@@ -16,75 +15,6 @@
   must be met. Other mods can use the same extension on their own MemeDefs.
 -->
 <Patch>
-
-  <!-- Beliefs that do not depend on a particular invention. Keeping an
-       explicit Neolithic floor makes every vanilla meme data-controlled while
-       preserving a useful set of tribal and starting beliefs. -->
-
-  <Operation Class="PatchOperationAddModExtension">
-    <xpath>Defs/MemeDef[defName="AnimalPersonhood"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><minTechLevel>Neolithic</minTechLevel></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension">
-    <xpath>Defs/MemeDef[defName="Blindsight"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><minTechLevel>Neolithic</minTechLevel></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension">
-    <xpath>Defs/MemeDef[defName="Cannibal"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><minTechLevel>Neolithic</minTechLevel></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension">
-    <xpath>Defs/MemeDef[defName="Collectivist"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><minTechLevel>Neolithic</minTechLevel></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension">
-    <xpath>Defs/MemeDef[defName="FemaleSupremacy"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><minTechLevel>Neolithic</minTechLevel></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension">
-    <xpath>Defs/MemeDef[defName="Guilty"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><minTechLevel>Neolithic</minTechLevel></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension">
-    <xpath>Defs/MemeDef[defName="Individualist"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><minTechLevel>Neolithic</minTechLevel></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension">
-    <xpath>Defs/MemeDef[defName="Loyalist"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><minTechLevel>Neolithic</minTechLevel></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension">
-    <xpath>Defs/MemeDef[defName="MaleSupremacy"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><minTechLevel>Neolithic</minTechLevel></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension">
-    <xpath>Defs/MemeDef[defName="NaturePrimacy"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><minTechLevel>Neolithic</minTechLevel></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension">
-    <xpath>Defs/MemeDef[defName="Nudism"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><minTechLevel>Neolithic</minTechLevel></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension">
-    <xpath>Defs/MemeDef[defName="PainIsVirtue"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><minTechLevel>Neolithic</minTechLevel></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension">
-    <xpath>Defs/MemeDef[defName="Proselytizer"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><minTechLevel>Neolithic</minTechLevel></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension">
-    <xpath>Defs/MemeDef[defName="Raider"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><minTechLevel>Neolithic</minTechLevel></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension">
-    <xpath>Defs/MemeDef[defName="Rancher"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><minTechLevel>Neolithic</minTechLevel></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension">
-    <xpath>Defs/MemeDef[defName="Supremacist"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><minTechLevel>Neolithic</minTechLevel></li></value>
-  </Operation>
 
   <!-- Research-driven beliefs. -->
 

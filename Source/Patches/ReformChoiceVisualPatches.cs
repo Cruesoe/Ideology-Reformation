@@ -51,12 +51,12 @@ internal static class ReformMemeLockVisualPatch
         Widgets.DrawRectFast(memeBox, new Color(0.22f, 0.22f, 0.22f, 0.78f));
         TooltipHandler.TipRegion(
             memeBox,
-            "FIO_LockedMemeTip".Translate(__state.SelectedObject.Label));
+            "IR_LockedMemeTip".Translate(__state.SelectedObject.Label));
 
         if (Widgets.ButtonInvisible(memeBox))
         {
             Messages.Message(
-                "FIO_AnotherObjectLocked".Translate(__state.SelectedObject.Label),
+                "IR_AnotherObjectLocked".Translate(__state.SelectedObject.Label),
                 MessageTypeDefOf.RejectInput,
                 historical: false);
         }

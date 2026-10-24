@@ -1,6 +1,6 @@
 # Ideology Reformation
 
-![Fluid Ideology Overhaul preview](About/Preview.png)
+![Ideology Reformation preview](About/Preview.png)
 
 **Let your colony's beliefs grow one tradition at a time.**
 
@@ -15,7 +15,7 @@ Each earned reform lets you make **one deliberate mechanical change**, such as:
 - editing one ritual or specialist role; or
 - changing a structure, relic, or ideological building.
 
-You can still edit several settings belonging to the same ritual or role. Names, descriptions, titles, icons, colours, and styles are cosmetic, so they can be updated freely during the reform.
+You can still edit several settings belonging to the same ritual or role. Names, descriptions, titles, icons, colors, and styles are cosmetic, so they can be updated freely during the reform.
 
 Once you choose a mechanical change, the other choices are locked for that reform. Reset the reform if you change your mind.
 
@@ -27,7 +27,7 @@ Once you choose a mechanical change, the other choices are locked for that refor
 - **Preserve what still fits.** When a meme changes, the mod keeps existing precepts that remain valid instead of unnecessarily rebuilding the ideoligion.
 - **Keep vanilla progression.** Development-point costs and reform timing are unchanged.
 
-For example, you can spend one reform adding a meme and rename and recolour your faith at the same time. Any required effects of that meme are shown separately in the review; they do not count as extra choices.
+For example, you can spend one reform adding a meme and rename and recolor your faith at the same time. Any required effects of that meme are shown separately in the review; they do not count as extra choices.
 
 ## Research can unlock new beliefs
 

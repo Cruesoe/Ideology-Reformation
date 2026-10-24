@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using HarmonyLib;
@@ -25,7 +26,7 @@ internal static class ReformDialogPatches
             return;
         }
 
-        Ideo working = (Ideo)WorkingIdeoField.GetValue(__instance);
+        Ideo working = (Ideo)WorkingIdeoField.GetValue(__instance)!;
         ReformSessions.Begin(__instance, ideo, working);
     }
 
@@ -38,16 +39,17 @@ internal static class ReformDialogPatches
             return;
         }
 
-        Text.Font = GameFont.Tiny;
+        // Below vanilla's description label, which starts at y + 40.
+        Text.Font = GameFont.Small;
+        float statusY = inRect.y + 40f + Text.CalcHeight("ReformIdeoligionDesc".Translate(), inRect.width);
         GUI.color = Color.gray;
         string status = session.SelectedObject == null
-            ? "FIO_NoObjectSelected".Translate()
-            : "FIO_SelectedObject".Translate(session.SelectedObject.Label);
-        Widgets.Label(new Rect(inRect.x, inRect.y + 70f, inRect.width - 180f, 20f), status);
+            ? "IR_NoObjectSelected".Translate()
+            : "IR_SelectedObject".Translate(session.SelectedObject.Label);
+        Widgets.Label(new Rect(inRect.x, statusY, inRect.width, Text.LineHeight), status);
         GUI.color = Color.white;
-        Text.Font = GameFont.Small;
 
-        if ((IdeoReformStage)StageField.GetValue(__instance) == IdeoReformStage.PreceptsNarrativeAndDeities)
+        if ((IdeoReformStage)StageField.GetValue(__instance)! == IdeoReformStage.PreceptsNarrativeAndDeities)
         {
             Rect resetRect = new Rect(
                 inRect.x + (inRect.width - Window.CloseButSize.x) / 2f,
@@ -58,7 +60,7 @@ internal static class ReformDialogPatches
             {
                 SoundDefOf.Tick_Low.PlayOneShotOnCamera();
                 session.Reset();
-                Messages.Message("FIO_ResetComplete".Translate(), MessageTypeDefOf.NeutralEvent, historical: false);
+                Messages.Message("IR_ResetComplete".Translate(), MessageTypeDefOf.NeutralEvent, historical: false);
             }
         }
     }
@@ -75,7 +77,7 @@ internal static class ReformDialogPatches
         // Take over RimWorld's existing centred Reset changes button. This restores
         // the complete opening snapshot, including precepts and cosmetic edits.
         session.Reset();
-        Messages.Message("FIO_ResetComplete".Translate(), MessageTypeDefOf.NeutralEvent, historical: false);
+        Messages.Message("IR_ResetComplete".Translate(), MessageTypeDefOf.NeutralEvent, historical: false);
         return false;
     }
 
@@ -85,7 +87,7 @@ internal static class ReformDialogPatches
     {
         if (ReformSessions.TryGet(__instance, out ReformSession session))
         {
-            // Style categories are presentation-only under FIO. Keep vanilla's mutual
+            // Style categories are presentation-only in this mod. Keep vanilla's mutual
             // exclusion for meme/structure changes. Once any object is selected, this also
             // activates RimWorld's existing grey overlays on the other mechanical choices.
             __result = session.SelectedObject != null
@@ -123,7 +125,8 @@ internal static class ReformEditorButtonPatch
             return true;
         }
 
-        if (label == "Randomize".Translate() || label == "RandomizePrecepts".Translate())
+        RefreshLabels();
+        if (randomizeLabels.Contains(label))
         {
             // Randomizing memes or precepts wholesale is incompatible with the
             // one-deliberate-object rule at any lock state, so remove the button
@@ -132,7 +135,7 @@ internal static class ReformEditorButtonPatch
             return false;
         }
 
-        if (session.SelectedObject != null && IsAddPreceptLabel(label))
+        if (session.SelectedObject != null && addPreceptLabels.Contains(label))
         {
             active = false;
             __state = session;
@@ -154,25 +157,42 @@ internal static class ReformEditorButtonPatch
         }
 
         Widgets.DrawRectFast(rect, new Color(0.22f, 0.22f, 0.22f, 0.78f));
-        TooltipHandler.TipRegion(rect, "FIO_LockedMemeTip".Translate(__state.SelectedObject.Label));
+        TooltipHandler.TipRegion(rect, "IR_LockedMemeTip".Translate(__state.SelectedObject.Label));
     }
 
-    private static bool IsAddPreceptLabel(string label)
-    {
-        return IsAddLabel(label, "Precept".Translate())
-            || IsAddLabel(label, "Role".Translate())
-            || IsAddLabel(label, "Ritual".Translate())
-            || IsAddLabel(label, "IdeoBuilding".Translate())
-            || IsAddLabel(label, "IdeoRelic".Translate())
-            || IsAddLabel(label, "IdeoWeapon".Translate())
-            || IsAddLabel(label, "Animal".Translate())
-            || IsAddLabel(label, "Xenotype".Translate().ToString().UncapitalizeFirst())
-            || IsAddLabel(label, "IdeoApparelDesire".Translate());
-    }
+    private static readonly HashSet<string> randomizeLabels = new();
+    private static readonly HashSet<string> addPreceptLabels = new();
+    private static LoadedLanguage? labelsLanguage;
 
-    private static bool IsAddLabel(string label, string objectLabel)
+    // Rebuilds the translated button labels when the active language changes.
+    private static void RefreshLabels()
     {
-        return label == ("AddPrecept".Translate(objectLabel).CapitalizeFirst() + "...");
+        if (labelsLanguage == LanguageDatabase.activeLanguage && randomizeLabels.Count > 0)
+        {
+            return;
+        }
+
+        labelsLanguage = LanguageDatabase.activeLanguage;
+        randomizeLabels.Clear();
+        randomizeLabels.Add("Randomize".Translate());
+        randomizeLabels.Add("RandomizePrecepts".Translate());
+
+        addPreceptLabels.Clear();
+        foreach (string objectLabel in new[]
+        {
+            "Precept".Translate().ToString(),
+            "Role".Translate().ToString(),
+            "Ritual".Translate().ToString(),
+            "IdeoBuilding".Translate().ToString(),
+            "IdeoRelic".Translate().ToString(),
+            "IdeoWeapon".Translate().ToString(),
+            "Animal".Translate().ToString(),
+            "Xenotype".Translate().ToString().UncapitalizeFirst(),
+            "IdeoApparelDesire".Translate().ToString()
+        })
+        {
+            addPreceptLabels.Add("AddPrecept".Translate(objectLabel).CapitalizeFirst() + "...");
+        }
     }
 }
 
@@ -201,7 +221,7 @@ internal static class LockedPreceptMenuOptionPatch
         }
 
         Messages.Message(
-            "FIO_AnotherObjectLocked".Translate(session.SelectedObject.Label),
+            "IR_AnotherObjectLocked".Translate(session.SelectedObject.Label),
             MessageTypeDefOf.RejectInput,
             historical: false);
         return false;

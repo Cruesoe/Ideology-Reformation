@@ -37,7 +37,7 @@ internal sealed class ReformSession
         if (notify)
         {
             Messages.Message(
-                "FIO_AnotherObjectLocked".Translate(SelectedObject.Label),
+                "IR_AnotherObjectLocked".Translate(SelectedObject.Label),
                 MessageTypeDefOf.RejectInput,
                 historical: false);
         }
@@ -47,7 +47,7 @@ internal sealed class ReformSession
 
     public void RefreshSelection(Precept precept)
     {
-        if (SelectedObject == null || SelectedObject.Kind is not (ReformObjectKind.Ritual or ReformObjectKind.Relic))
+        if (SelectedObject == null || SelectedObject.Kind is not (ReformObjectKind.Ritual or ReformObjectKind.Relic or ReformObjectKind.Building))
         {
             return;
         }

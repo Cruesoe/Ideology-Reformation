@@ -16,17 +16,15 @@ namespace IdeologyReformation.Patches;
 [HarmonyPatch(typeof(ResearchProjectDef), nameof(ResearchProjectDef.UnlockedDefs), MethodType.Getter)]
 internal static class ResearchMemeUnlockDisplayPatch
 {
+    private static Dictionary<string, List<MemeDef>>? memesByProject;
+
     [HarmonyPostfix]
     private static void Postfix(ResearchProjectDef __instance, List<Def> __result)
     {
-        IEnumerable<MemeDef> unlockedMemes = DefDatabase<MemeDef>.AllDefsListForReading
-            .Where(meme =>
-            {
-                MemeAvailabilityExtension? restriction = meme.GetModExtension<MemeAvailabilityExtension>();
-                return restriction?.requiredResearch?.Contains(__instance) == true
-                    || restriction?.requiredResearchDefNames?.Contains(__instance.defName) == true;
-            })
-            .OrderBy(meme => meme.label);
+        if (!MemesByProject().TryGetValue(__instance.defName, out List<MemeDef>? unlockedMemes))
+        {
+            return;
+        }
 
         foreach (MemeDef meme in unlockedMemes)
         {
@@ -35,6 +33,40 @@ internal static class ResearchMemeUnlockDisplayPatch
                 __result.Add(meme);
             }
         }
+    }
+
+    // Built once, keyed by project defName so generated projects (Node Research) match too.
+    private static Dictionary<string, List<MemeDef>> MemesByProject()
+    {
+        if (memesByProject != null)
+        {
+            return memesByProject;
+        }
+
+        memesByProject = new Dictionary<string, List<MemeDef>>();
+        foreach (MemeDef meme in DefDatabase<MemeDef>.AllDefsListForReading.OrderBy(meme => meme.label))
+        {
+            MemeAvailabilityExtension? restriction = meme.GetModExtension<MemeAvailabilityExtension>();
+            if (restriction == null)
+            {
+                continue;
+            }
+
+            IEnumerable<string> projects = (restriction.requiredResearch?.Select(project => project.defName) ?? Enumerable.Empty<string>())
+                .Concat(restriction.requiredResearchDefNames ?? Enumerable.Empty<string>());
+            foreach (string project in projects.Distinct())
+            {
+                if (!memesByProject.TryGetValue(project, out List<MemeDef>? memes))
+                {
+                    memes = new List<MemeDef>();
+                    memesByProject[project] = memes;
+                }
+
+                memes.Add(meme);
+            }
+        }
+
+        return memesByProject;
     }
 }
 
@@ -77,7 +109,7 @@ internal static class ResearchMemeUnlockLabelPatch
     {
         if (ResearchUnlockLabelScopePatch.IsDrawing && __instance.def is MemeDef)
         {
-            __result = "FIO_ResearchUnlockMeme".Translate(__result);
+            __result = "IR_ResearchUnlockMeme".Translate(__result);
         }
     }
 }

@@ -19,22 +19,22 @@ internal static class MemePreservationPatches
     private static bool Prefix(Dialog_ChooseMemes __instance, out CascadeState? __state)
     {
         __state = null;
-        if (!(bool)ReformingField.GetValue(__instance))
+        if (!(bool)ReformingField.GetValue(__instance)!)
         {
             return true;
         }
 
-        Ideo working = (Ideo)IdeoField.GetValue(__instance);
+        Ideo working = (Ideo)IdeoField.GetValue(__instance)!;
         if (!ReformSessions.TryGet(working, out ReformSession session))
         {
             return true;
         }
 
-        List<MemeDef> proposed = (List<MemeDef>)NewMemesField.GetValue(__instance);
+        List<MemeDef> proposed = (List<MemeDef>)NewMemesField.GetValue(__instance)!;
         ReformObject? reformObject = ReformObject.ForMemeChange(session.Original, proposed);
         if (reformObject == null)
         {
-            Messages.Message("FIO_OneMemeAtATime".Translate(), MessageTypeDefOf.RejectInput, historical: false);
+            Messages.Message("IR_OneMemeAtATime".Translate(), MessageTypeDefOf.RejectInput, historical: false);
             return false;
         }
 

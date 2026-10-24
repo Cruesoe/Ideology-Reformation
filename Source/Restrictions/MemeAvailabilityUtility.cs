@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
 using Verse;
-using IdeologyReformation.Tech;
 
 namespace IdeologyReformation.Restrictions;
 
@@ -20,16 +19,6 @@ public static class MemeAvailabilityUtility
         if (restriction == null || TitleScreenEditorSupport.IsEditingFromTitleScreen())
         {
             return null;
-        }
-
-        if (restriction.minTechLevel != TechLevel.Undefined)
-        {
-            TechLevel? current = TechLevelService.EffectiveTechLevel();
-            if (current.HasValue && current.Value < restriction.minTechLevel)
-            {
-                string techLabel = ("TechLevel_" + restriction.minTechLevel).Translate();
-                return "FIO_MemeLockedTechLevel".Translate(techLabel);
-            }
         }
 
         List<string> missing = restriction.requiredResearch?
@@ -51,7 +40,7 @@ public static class MemeAvailabilityUtility
 
         if (missing.Count > 0)
         {
-            return "FIO_MemeLockedResearch".Translate(missing.Distinct().ToList().ToCommaList(useAnd: true));
+            return "IR_MemeLockedResearch".Translate(missing.Distinct().ToList().ToCommaList(useAnd: true));
         }
 
         return null;
