@@ -29,7 +29,7 @@ internal sealed class Dialog_ReformReview : Window
     public override void DoWindowContents(Rect inRect)
     {
         Text.Font = GameFont.Medium;
-        Widgets.Label(new Rect(inRect.x, inRect.y, inRect.width, 35f), "FIO_ReviewTitle".Translate());
+        Widgets.Label(new Rect(inRect.x, inRect.y, inRect.width, 35f), "IR_ReviewTitle".Translate());
         Text.Font = GameFont.Small;
 
         Rect outRect = new Rect(inRect.x, inRect.y + 45f, inRect.width, inRect.height - 100f);
@@ -39,26 +39,27 @@ internal sealed class Dialog_ReformReview : Window
 
         Widgets.BeginScrollView(outRect, ref scrollPosition, viewRect);
         float curY = 0f;
-        DrawSection(ref curY, viewWidth, "FIO_PrimaryChange".Translate(),
-            EmptyStateText(summary.PrimaryMemeCards, summary.HasMechanicalObject ? "None".Translate() : "FIO_CosmeticOnly".Translate()),
+        DrawSection(ref curY, viewWidth, "IR_PrimaryChange".Translate(),
+            EmptyStateText(summary.PrimaryMemeCards, summary.HasMechanicalObject ? "None".Translate() : "IR_CosmeticOnly".Translate()),
             memeCards: summary.PrimaryMemeCards);
-        DrawSection(ref curY, viewWidth, "FIO_Consequences".Translate(),
-            EmptyStateText(summary.PreceptCards, "FIO_NoConsequences".Translate()),
-            preceptCards: summary.PreceptCards);
+        DrawSection(ref curY, viewWidth, "IR_Consequences".Translate(),
+            EmptyStateText(summary.PreceptCards, "IR_NoConsequences".Translate()),
+            preceptCards: summary.PreceptCards,
+            removedPreceptIds: summary.RemovedPreceptIds);
         if (summary.CosmeticChanges.Count > 0)
         {
-            DrawSection(ref curY, viewWidth, "FIO_CosmeticChanges".Translate(), summary.CosmeticText);
+            DrawSection(ref curY, viewWidth, "IR_CosmeticChanges".Translate(), summary.CosmeticText);
         }
 
         Widgets.EndScrollView();
 
         Rect backRect = new Rect(inRect.x, inRect.yMax - 40f, 180f, 40f);
         Rect confirmRect = new Rect(inRect.xMax - 180f, inRect.yMax - 40f, 180f, 40f);
-        if (Widgets.ButtonText(backRect, "FIO_GoBack".Translate()))
+        if (Widgets.ButtonText(backRect, "IR_GoBack".Translate()))
         {
             Close();
         }
-        if (Widgets.ButtonText(confirmRect, "FIO_ConfirmReform".Translate()))
+        if (Widgets.ButtonText(confirmRect, "IR_ConfirmReform".Translate()))
         {
             Close();
             confirm();
@@ -69,11 +70,11 @@ internal sealed class Dialog_ReformReview : Window
     {
         float height = SectionHeight(
                 width,
-                EmptyStateText(summary.PrimaryMemeCards, summary.HasMechanicalObject ? "None".Translate() : "FIO_CosmeticOnly".Translate()),
+                EmptyStateText(summary.PrimaryMemeCards, summary.HasMechanicalObject ? "None".Translate() : "IR_CosmeticOnly".Translate()),
                 memeCards: summary.PrimaryMemeCards)
             + SectionHeight(
                 width,
-                EmptyStateText(summary.PreceptCards, "FIO_NoConsequences".Translate()),
+                EmptyStateText(summary.PreceptCards, "IR_NoConsequences".Translate()),
                 preceptCards: summary.PreceptCards);
         if (summary.CosmeticChanges.Count > 0)
         {
@@ -112,13 +113,14 @@ internal sealed class Dialog_ReformReview : Window
         string heading,
         string body,
         IReadOnlyList<Precept>? preceptCards = null,
-        IReadOnlyList<MemeDef>? memeCards = null)
+        IReadOnlyList<MemeDef>? memeCards = null,
+        HashSet<int>? removedPreceptIds = null)
     {
         Text.Font = GameFont.Medium;
         float headingHeight = Text.CalcHeight(heading, width);
         Widgets.Label(new Rect(0f, curY, width, headingHeight), heading);
         curY += headingHeight + 6f;
-        DrawPreceptCards(ref curY, width, preceptCards);
+        DrawPreceptCards(ref curY, width, preceptCards, removedPreceptIds);
         DrawMemeCards(ref curY, width, memeCards);
         if (!body.NullOrEmpty())
         {
@@ -139,7 +141,7 @@ internal sealed class Dialog_ReformReview : Window
         return rows * IdeoUIUtility.PreceptBoxSize.y + (rows - 1) * 8f + 10f;
     }
 
-    private static void DrawPreceptCards(ref float curY, float width, IReadOnlyList<Precept>? cards)
+    private static void DrawPreceptCards(ref float curY, float width, IReadOnlyList<Precept>? cards, HashSet<int>? removedIds)
     {
         if (cards == null || cards.Count == 0)
         {
@@ -161,9 +163,25 @@ internal sealed class Dialog_ReformReview : Window
                 IdeoUIUtility.PreceptBoxSize.x,
                 IdeoUIUtility.PreceptBoxSize.y);
             cards[i].DrawPreceptBox(cardRect, IdeoEditMode.None);
+            if (removedIds != null && removedIds.Contains(cards[i].Id))
+            {
+                DrawRemovedOverlay(cardRect);
+            }
         }
 
         curY += PreceptCardsHeight(width, cards);
+    }
+
+    // Dims a removed precept's card and labels it across the middle.
+    private static void DrawRemovedOverlay(Rect cardRect)
+    {
+        Widgets.DrawRectFast(cardRect, new Color(0.10f, 0.10f, 0.10f, 0.55f));
+        Text.Font = GameFont.Small;
+        Rect bandRect = new Rect(cardRect.x, cardRect.center.y - Text.LineHeight / 2f, cardRect.width, Text.LineHeight);
+        Widgets.DrawRectFast(bandRect, new Color(0.45f, 0.12f, 0.10f, 0.9f));
+        Text.Anchor = TextAnchor.MiddleCenter;
+        Widgets.Label(bandRect, "IR_PreceptRemoved".Translate());
+        Text.Anchor = TextAnchor.UpperLeft;
     }
 
     private static float MemeCardsHeight(float width, IReadOnlyCollection<MemeDef>? cards)

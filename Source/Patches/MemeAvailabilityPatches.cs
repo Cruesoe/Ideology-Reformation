@@ -15,10 +15,14 @@ namespace IdeologyReformation.Patches;
 [HarmonyPatch(typeof(Dialog_ChooseMemes), "DrawMeme")]
 internal static class MemeLockVisualPatch
 {
+    private static readonly AccessTools.FieldRef<Dialog_ChooseMemes, Ideo> IdeoRef =
+        AccessTools.FieldRefAccess<Dialog_ChooseMemes, Ideo>("ideo");
+
     [HarmonyPrefix]
-    private static void Prefix(MemeDef meme, Rect memeBox, out string? __state)
+    private static void Prefix(Dialog_ChooseMemes __instance, MemeDef meme, Rect memeBox, out string? __state)
     {
-        __state = MemeAvailabilityUtility.LockedReason(meme);
+        // A meme the ideoligion already has stays selectable so it can be removed.
+        __state = IdeoRef(__instance)?.memes.Contains(meme) == true ? null : MemeAvailabilityUtility.LockedReason(meme);
         if (__state == null)
         {
             return;
@@ -46,17 +50,16 @@ internal static class MemeLockVisualPatch
 }
 
 /// <summary>
-/// Applies the same gate to <see cref="IdeoUtility"/>'s random meme generation. Vanilla builds
-/// starting-scenario ideoligions and the "Randomize" button through this path, so without this
-/// patch a locked meme could still be rolled onto a freshly generated ideoligion.
+/// Applies the same gate to <see cref="IdeoUtility"/>'s random meme generation for the player's
+/// ideoligion (starting scenarios and "Randomize"). Other factions' ideoligions are not gated.
 /// </summary>
 [HarmonyPatch(typeof(IdeoUtility), "CanAdd")]
 internal static class MemeAvailabilityRandomizationPatch
 {
     [HarmonyPostfix]
-    private static void Postfix(MemeDef meme, ref bool __result)
+    private static void Postfix(MemeDef meme, FactionDef? forFaction, ref bool __result)
     {
-        if (__result && !MemeAvailabilityUtility.IsMemeAvailable(meme))
+        if (__result && (forFaction == null || forFaction.isPlayer) && !MemeAvailabilityUtility.IsMemeAvailable(meme))
         {
             __result = false;
         }

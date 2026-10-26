@@ -35,32 +35,32 @@ internal sealed class ReformObject : IEquatable<ReformObject>
         if (precept is Precept_Ritual)
         {
             return new ReformObject(ReformObjectKind.Ritual, $"ritual:{precept.Id}",
-                "FIO_ObjectRitual".Translate(precept.LabelCap));
+                "IR_ObjectRitual".Translate(precept.LabelCap));
         }
 
         if (precept is Precept_Role)
         {
             return new ReformObject(ReformObjectKind.Role, $"role:{precept.def.defName}",
-                "FIO_ObjectRole".Translate(precept.LabelCap));
+                "IR_ObjectRole".Translate(precept.LabelCap));
         }
 
         if (precept is Precept_Relic)
         {
             return new ReformObject(ReformObjectKind.Relic, $"relic:{precept.Id}",
-                "FIO_ObjectRelic".Translate(precept.LabelCap));
+                "IR_ObjectRelic".Translate(precept.LabelCap));
         }
 
         if (precept is Precept_Building)
         {
-            return new ReformObject(ReformObjectKind.Building, $"building:{precept.def.defName}",
-                "FIO_ObjectBuilding".Translate(precept.LabelCap));
+            return new ReformObject(ReformObjectKind.Building, $"building:{precept.Id}",
+                "IR_ObjectBuilding".Translate(precept.LabelCap));
         }
 
         IssueDef issue = precept.def.issue;
         string key = issue != null ? issue.defName : precept.def.defName;
         string label = issue != null ? issue.LabelCap.ToString() : precept.UIInfoFirstLine;
         return new ReformObject(ReformObjectKind.Precept, $"precept:{key}",
-            "FIO_ObjectPrecept".Translate(label));
+            "IR_ObjectPrecept".Translate(label));
     }
 
     public static ReformObject? ForMemeChange(Ideo original, IReadOnlyCollection<MemeDef> proposed)
@@ -70,7 +70,7 @@ internal sealed class ReformObject : IEquatable<ReformObject>
         if (oldStructure != newStructure && newStructure != null)
         {
             return new ReformObject(ReformObjectKind.Structure, "structure",
-                "FIO_ObjectStructure".Translate(newStructure.LabelCap));
+                "IR_ObjectStructure".Translate(newStructure.LabelCap));
         }
 
         List<MemeDef> added = proposed.Where(m => m.category == MemeCategory.Normal && !original.memes.Contains(m)).ToList();
@@ -81,9 +81,9 @@ internal sealed class ReformObject : IEquatable<ReformObject>
         }
 
         MemeDef meme = added.Count == 1 ? added[0] : removed[0];
-        string action = added.Count == 1 ? "FIO_ActionAdd".Translate() : "FIO_ActionRemove".Translate();
+        string action = added.Count == 1 ? "IR_ActionAdd".Translate() : "IR_ActionRemove".Translate();
         return new ReformObject(ReformObjectKind.Meme, $"meme:{meme.defName}",
-            "FIO_ObjectMeme".Translate(action, meme.LabelCap));
+            "IR_ObjectMeme".Translate(action, meme.LabelCap));
     }
 
     public bool Equals(ReformObject? other) => other != null && Kind == other.Kind && Key == other.Key;

@@ -4,39 +4,42 @@ Ideology Reformation makes selected memes become available as your colony advanc
 
 [list]
 [*][b]Research requirement[/b] — complete the named research project.
-[*][b]Tech-level requirement[/b] — advance the colony to at least that technology level.
 [*][b]Available immediately[/b] — Ideology Reformation adds no progression requirement. The relevant DLC or content mod must still be enabled.
 [/list]
 
-[i]Current coverage: 133 memes and structures from 11 supported sources; 52 have progression requirements and 81 are available immediately.[/i]
+[i]Current coverage: 136 memes and structures from 11 supported sources; 36 have progression requirements and 100 are available immediately.[/i]
 
 [h2]Core Ideology[/h2]
 
 [b]Progression unlocks[/b]
 [list]
-[*][b]Animal personhood[/b] — Tech level: Neolithic
-[*][b]Blindsight[/b] — Tech level: Neolithic
-[*][b]Cannibal[/b] — Tech level: Neolithic
-[*][b]Collectivist[/b] — Tech level: Neolithic
 [*][b]Darkness[/b] — Research: Electricity
-[*][b]Female supremacy[/b] — Tech level: Neolithic
 [*][b]Flesh purity[/b] — Research: Prosthetics
-[*][b]Guilty[/b] — Tech level: Neolithic
 [*][b]High life[/b] — Research: Psychoid brewing
 [*][b]Human primacy[/b] — Research: Machining
-[*][b]Individualist[/b] — Tech level: Neolithic
-[*][b]Loyalist[/b] — Tech level: Neolithic
-[*][b]Male supremacy[/b] — Tech level: Neolithic
-[*][b]Nature primacy[/b] — Tech level: Neolithic
-[*][b]Nudism[/b] — Tech level: Neolithic
-[*][b]Pain is virtue[/b] — Tech level: Neolithic
-[*][b]Proselytizer[/b] — Tech level: Neolithic
-[*][b]Raider[/b] — Tech level: Neolithic
-[*][b]Rancher[/b] — Tech level: Neolithic
-[*][b]Supremacist[/b] — Tech level: Neolithic
 [*][b]Transhumanist[/b] — Research: Biosculpting
 [*][b]Tree connection[/b] — Research: Tree sowing
 [*][b]Tunneler[/b] — Research: Stonecutting
+[/list]
+
+[b]Available immediately[/b]
+[list]
+[*]Animal personhood
+[*]Blindsight
+[*]Cannibal
+[*]Collectivist
+[*]Female supremacy
+[*]Guilty
+[*]Individualist
+[*]Loyalist
+[*]Male supremacy
+[*]Nature primacy
+[*]Nudism
+[*]Pain is virtue
+[*]Proselytizer
+[*]Raider
+[*]Rancher
+[*]Supremacist
 [/list]
 
 [b]Structures — available immediately[/b]
