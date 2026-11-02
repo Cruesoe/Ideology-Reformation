@@ -7,6 +7,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+$dash = [char]0x2014
 $repoRoot = Split-Path -Parent $PSScriptRoot
 if (-not $OutputPath) {
     $OutputPath = Join-Path $repoRoot 'Docs\STEAM_DISCUSSION_MEME_UNLOCKS.txt'
@@ -130,6 +131,26 @@ foreach ($catalogRoot in $catalogRoots) {
     }
 }
 
+function Get-PackageList {
+    param([string]$Value)
+
+    return @($Value -split ',' | ForEach-Object { $_.Trim().ToLowerInvariant() } | Where-Object { $_ })
+}
+
+# The highest version entry in a LoadFolders.xml, preferring 1.7.
+function Get-LoadFolderEntries {
+    param([Parameter(Mandatory)]$LoadFoldersXml)
+
+    foreach ($version in 'v1.7', 'v1.6') {
+        $entries = @($LoadFoldersXml.SelectNodes("/loadFolders/$version/li"))
+        if ($entries.Count -gt 0) {
+            return $entries
+        }
+    }
+
+    return @()
+}
+
 function Get-ActiveLoadFolders {
     param(
         [Parameter(Mandatory)]$Mod,
@@ -141,15 +162,19 @@ function Get-ActiveLoadFolders {
         $loadFoldersXml = Get-XmlFile -Path $loadFoldersPath
         if ($null -ne $loadFoldersXml) {
             $folders = @()
-            foreach ($entry in @($loadFoldersXml.SelectNodes('/loadFolders/v1.6/li'))) {
+            foreach ($entry in Get-LoadFolderEntries -LoadFoldersXml $loadFoldersXml) {
                 $include = $true
-                $ifActive = $entry.GetAttribute('IfModActive')
-                $ifInactive = $entry.GetAttribute('IfModNotActive')
+                $anyOf = Get-PackageList $entry.GetAttribute('IfModActive')
+                $allOf = Get-PackageList $entry.GetAttribute('IfModActiveAll')
+                $noneOf = Get-PackageList $entry.GetAttribute('IfModNotActive')
 
-                if ($ifActive) {
-                    $include = $EnabledPackages.ContainsKey($ifActive.ToLowerInvariant())
+                if ($anyOf.Count -gt 0 -and -not ($anyOf | Where-Object { $EnabledPackages.ContainsKey($_) })) {
+                    $include = $false
                 }
-                if ($ifInactive -and $EnabledPackages.ContainsKey($ifInactive.ToLowerInvariant())) {
+                if ($allOf | Where-Object { -not $EnabledPackages.ContainsKey($_) }) {
+                    $include = $false
+                }
+                if ($noneOf | Where-Object { $EnabledPackages.ContainsKey($_) }) {
                     $include = $false
                 }
 
@@ -205,6 +230,16 @@ $conditionalRequirementLabels = @{
     'ferny.noderesearch' = 'Node Research'
 }
 
+# Package IDs each of this mod's patch folders is loaded for, from its own LoadFolders.xml.
+$folderConditions = @{}
+$ownLoadFolders = Get-XmlFile -Path (Join-Path $repoRoot 'LoadFolders.xml')
+if ($null -ne $ownLoadFolders) {
+    foreach ($entry in Get-LoadFolderEntries -LoadFoldersXml $ownLoadFolders) {
+        $folder = $entry.InnerText.Trim().Trim('/').Replace('/', '\')
+        $folderConditions[$folder] = @(Get-PackageList $entry.GetAttribute('IfModActive')) + @(Get-PackageList $entry.GetAttribute('IfModActiveAll'))
+    }
+}
+
 $unlockConditions = @{}
 $availabilityClass = 'IdeologyReformation.Restrictions.MemeAvailabilityExtension'
 $availabilityFiles = @(
@@ -253,9 +288,17 @@ foreach ($availabilityFile in $availabilityFiles) {
             $condition = 'Unrestricted'
         }
 
-        $mayRequire = $operation.GetAttribute('MayRequire').ToLowerInvariant()
-        if ($mayRequire -and $conditionalRequirementLabels.ContainsKey($mayRequire)) {
-            $condition += " (when $($conditionalRequirementLabels[$mayRequire]) is enabled)"
+        $relativeFile = $availabilityFile.FullName.Substring($repoRoot.Length).TrimStart('\')
+        $loadFolder = $folderConditions.Keys |
+            Where-Object { $relativeFile.StartsWith("$_\", [System.StringComparison]::OrdinalIgnoreCase) } |
+            Sort-Object Length -Descending |
+            Select-Object -First 1
+        if ($loadFolder) {
+            foreach ($packageId in $folderConditions[$loadFolder]) {
+                if ($conditionalRequirementLabels.ContainsKey($packageId)) {
+                    $condition += " (when $($conditionalRequirementLabels[$packageId]) is enabled)"
+                }
+            }
         }
 
         $findModOperation = $operation.SelectSingleNode('ancestor::Operation[@Class="PatchOperationFindMod"][1]')
@@ -358,13 +401,13 @@ $restrictedCount = @($rows | Where-Object { $_.UnlockCondition -ne 'Unrestricted
 $unrestrictedCount = $rows.Count - $restrictedCount
 $providerCount = @($rows.Provider | Select-Object -Unique).Count
 $lines = [System.Collections.Generic.List[string]]::new()
-$lines.Add('[h1]Ideology Reformation — Meme Unlock Guide[/h1]')
+$lines.Add("[h1]Ideology Reformation $dash Meme Unlock Guide[/h1]")
 $lines.Add('')
 $lines.Add('Ideology Reformation makes selected memes become available as your colony advances. This reference lists every supported meme and the requirement, if any, added by the mod.')
 $lines.Add('')
 $lines.Add('[list]')
-$lines.Add('[*][b]Research requirement[/b] — complete the named research project.')
-$lines.Add('[*][b]Available immediately[/b] — Ideology Reformation adds no progression requirement. The relevant DLC or content mod must still be enabled.')
+$lines.Add("[*][b]Research requirement[/b] $dash complete the named research project.")
+$lines.Add("[*][b]Available immediately[/b] $dash Ideology Reformation adds no progression requirement. The relevant DLC or content mod must still be enabled.")
 $lines.Add('[/list]')
 $lines.Add('')
 $lines.Add("[i]Current coverage: $($rows.Count) memes and structures from $providerCount supported sources; $restrictedCount have progression requirements and $unrestrictedCount are available immediately.[/i]")
@@ -388,7 +431,7 @@ foreach ($providerGroup in $providerGroups) {
         $lines.Add('[list]')
         foreach ($meme in $gated) {
             $label = ConvertTo-PlayerLabel $meme.Label
-            $lines.Add("[*][b]$label[/b] — $($meme.UnlockCondition)")
+            $lines.Add("[*][b]$label[/b] $dash $($meme.UnlockCondition)")
         }
         $lines.Add('[/list]')
         $lines.Add('')
@@ -406,7 +449,7 @@ foreach ($providerGroup in $providerGroups) {
     }
 
     if ($immediateStructures.Count -gt 0) {
-        $heading = if ($gatedStructures.Count -eq 0) { '[b]Structures — available immediately[/b]' } else { '[b]Structures available immediately[/b]' }
+        $heading = if ($gatedStructures.Count -eq 0) { "[b]Structures $dash available immediately[/b]" } else { '[b]Structures available immediately[/b]' }
         $lines.Add($heading)
         $lines.Add('[list]')
         foreach ($meme in $immediateStructures) {
@@ -422,7 +465,7 @@ foreach ($providerGroup in $providerGroups) {
         $lines.Add('[list]')
         foreach ($meme in $gatedStructures) {
             $label = ConvertTo-PlayerLabel $meme.Label
-            $lines.Add("[*][b]$label[/b] — $($meme.UnlockCondition)")
+            $lines.Add("[*][b]$label[/b] $dash $($meme.UnlockCondition)")
         }
         $lines.Add('[/list]')
     }

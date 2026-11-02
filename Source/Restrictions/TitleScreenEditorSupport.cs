@@ -4,10 +4,7 @@ using Verse;
 
 namespace IdeologyReformation.Restrictions;
 
-/// <summary>
-/// Detects the throwaway game that Xenotype And Ideology Buttons TitleScreen creates for its
-/// main-menu ideoligion editor. That game has no research, so meme gates are skipped there.
-/// </summary>
+/// <summary>Detects Xenotype And Ideology Buttons TitleScreen's main-menu ideoligion editor, where meme gates are skipped.</summary>
 internal static class TitleScreenEditorSupport
 {
     private static readonly FieldInfo? PreviewGameField = FindPreviewGameField();

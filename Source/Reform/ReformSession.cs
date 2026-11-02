@@ -12,6 +12,7 @@ internal sealed class ReformSession
     public ReformObject? SelectedObject { get; private set; }
     public bool ReviewApproved { get; set; }
     public bool CommitStarted { get; private set; }
+    public bool IsResetting { get; private set; }
 
     public ReformSession(Dialog_ReformIdeo dialog, Ideo original, Ideo working)
     {
@@ -67,9 +68,7 @@ internal sealed class ReformSession
             return false;
         }
 
-        // A meme may introduce an issue or replace an existing issue's value to meet
-        // its requirements. Choosing the value for that changed issue configures the
-        // meme consequence rather than selecting a second deliberate reform object.
+        // Setting an issue the chosen meme added or changed configures that meme, not a second object.
         var before = Original.PreceptsListForReading.Where(p => p.def.issue == precept.def.issue).ToList();
         var after = Working.PreceptsListForReading.Where(p => p.def.issue == precept.def.issue).ToList();
         return before.Count != after.Count
@@ -78,7 +77,16 @@ internal sealed class ReformSession
 
     public void Reset()
     {
-        Original.CopyTo(Working);
+        IsResetting = true;
+        try
+        {
+            Original.CopyTo(Working);
+        }
+        finally
+        {
+            IsResetting = false;
+        }
+
         SelectedObject = null;
         ReviewApproved = false;
         CommitStarted = false;

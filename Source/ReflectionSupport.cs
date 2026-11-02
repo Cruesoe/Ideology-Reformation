@@ -3,15 +3,12 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using HarmonyLib;
 using IdeologyReformation.Patches;
+using IdeologyReformation.Restrictions;
 using Verse;
 
 namespace IdeologyReformation;
 
-/// <summary>
-/// Wraps AccessTools lookups of RimWorld's private members so a renamed or removed
-/// field logs a clear diagnostic at mod load instead of surfacing as a bare
-/// NullReferenceException the first time an affected dialog opens.
-/// </summary>
+/// <summary>Looks up RimWorld's private fields, logging a clear error at load when one is missing.</summary>
 internal static class ReflectionSupport
 {
     public static FieldInfo RequireField(Type type, string fieldName)
@@ -26,15 +23,12 @@ internal static class ReflectionSupport
         return field!;
     }
 
-    /// <summary>
-    /// Forces the static field lookups in the Harmony patch classes to run now, at mod
-    /// load, rather than lazily on first use, so any RequireField failure logs during
-    /// startup instead of surfacing as a runtime NullReferenceException while playing.
-    /// </summary>
+    // Runs the field lookups at load so a missing field is reported at startup.
     public static void EnsureFieldLookupsResolved()
     {
         RuntimeHelpers.RunClassConstructor(typeof(MemePreservationPatches).TypeHandle);
         RuntimeHelpers.RunClassConstructor(typeof(DetailedPreceptEditPatch).TypeHandle);
         RuntimeHelpers.RunClassConstructor(typeof(ReformDialogPatches).TypeHandle);
+        RuntimeHelpers.RunClassConstructor(typeof(StartingResearch).TypeHandle);
     }
 }

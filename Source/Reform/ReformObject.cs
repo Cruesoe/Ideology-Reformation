@@ -6,17 +6,7 @@ using Verse;
 
 namespace IdeologyReformation.Reform;
 
-internal enum ReformObjectKind
-{
-    Meme,
-    Structure,
-    Precept,
-    Ritual,
-    Role,
-    Relic,
-    Building
-}
-
+/// <summary>The one mechanical change a reform is locked to, identified by kind and key.</summary>
 internal sealed class ReformObject : IEquatable<ReformObject>
 {
     public ReformObjectKind Kind { get; }

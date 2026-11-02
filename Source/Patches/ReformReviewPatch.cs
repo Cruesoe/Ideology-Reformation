@@ -20,8 +20,7 @@ internal static class ReformReviewPatch
 
         if (session.ReviewApproved)
         {
-            // Approval bypasses this patch exactly once. If a later vanilla warning is
-            // cancelled, the next attempt receives a fresh review.
+            // Approval skips the review once; a cancelled vanilla warning gets a fresh review next time.
             session.ReviewApproved = false;
             return true;
         }

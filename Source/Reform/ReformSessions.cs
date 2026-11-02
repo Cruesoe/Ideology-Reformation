@@ -32,28 +32,3 @@ internal static class ReformSessions
         Diagnostics.Message($"Closed reform session for {session.Original.name}.");
     }
 }
-
-internal static class MutationScope
-{
-    [System.ThreadStatic]
-    private static int consequenceDepth;
-
-    [System.ThreadStatic]
-    private static int preceptMutationDepth;
-
-    public static bool IsResolvingConsequences => consequenceDepth > 0;
-    public static bool IsNestedPreceptMutation => preceptMutationDepth > 0;
-    public static void EnterConsequences() => consequenceDepth++;
-    public static void ExitConsequences() => consequenceDepth = System.Math.Max(0, consequenceDepth - 1);
-    public static void EnterPreceptMutation() => preceptMutationDepth++;
-    public static void ExitPreceptMutation() => preceptMutationDepth = System.Math.Max(0, preceptMutationDepth - 1);
-}
-
-internal static class Diagnostics
-{
-    [System.Diagnostics.Conditional("DEBUG")]
-    public static void Message(string message)
-    {
-        Verse.Log.Message("[Ideology Reformation] " + message);
-    }
-}
