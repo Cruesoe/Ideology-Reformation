@@ -47,23 +47,6 @@
     <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><requiredResearch><li>Biosculpting</li></requiredResearch></li></value>
   </Operation>
 
-  <!-- Expansion memes. MayRequire prevents missing-DLC patch errors. -->
-
-  <Operation Class="PatchOperationAddModExtension" MayRequire="Ludeon.RimWorld.Biotech">
-    <xpath>Defs/MemeDef[defName="Bloodfeeding"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><requiredResearch><li>Deathrest</li></requiredResearch></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension" MayRequire="Ludeon.RimWorld.Anomaly">
-    <xpath>Defs/MemeDef[defName="Ritualist"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><requiredResearch><li>BasicPsychicRituals</li></requiredResearch></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension" MayRequire="Ludeon.RimWorld.Anomaly">
-    <xpath>Defs/MemeDef[defName="Inhuman"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><requiredResearch><li>AdvancedPsychicRituals</li></requiredResearch></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension" MayRequire="Ludeon.RimWorld.Odyssey">
-    <xpath>Defs/MemeDef[defName="Shipborn"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><requiredResearch><li>OrbitalTech</li></requiredResearch></li></value>
-  </Operation>
+  <!-- Expansion memes are gated in Mods/<Expansion>, loaded only with that DLC. -->
 
 </Patch>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Progression: Agriculture removes the Devilstrand research definition. -->
+  <Operation Class="PatchOperationRemove">
+    <xpath>Defs/MemeDef[defName="AM_DeepDevotion"]/startingResearchProjects/li[text()="Devilstrand"]</xpath>
+  </Operation>
+</Patch>

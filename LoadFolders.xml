@@ -3,14 +3,21 @@
   Filenames must stay unique across these folders. RimWorld keys mod content by path
   relative to the load folder and keeps only the highest-priority match, so a file that
   repeats a name used by an earlier folder silently replaces it instead of adding to it.
+  Optional patches are gated here because RimWorld ignores MayRequire on patch operations.
 -->
 <loadFolders>
   <v1.6>
     <li>/</li>
     <li>Common</li>
     <li>1.6</li>
+    <li IfModActive="Ludeon.RimWorld.Biotech">Mods/Biotech</li>
+    <li IfModActive="Ludeon.RimWorld.Anomaly">Mods/Anomaly</li>
+    <li IfModActive="Ludeon.RimWorld.Odyssey">Mods/Odyssey</li>
     <li IfModActive="VanillaExpanded.VMemesE">Mods/VanillaIdeologyExpanded</li>
+    <li IfModActiveAll="VanillaExpanded.VMemesE,ferny.noderesearch">Mods/VanillaIdeologyExpandedNodeResearch</li>
     <li IfModActive="Sarg.AlphaMemes">Mods/AlphaMemes</li>
+    <li IfModActiveAll="Sarg.AlphaMemes,Ludeon.RimWorld.Biotech">Mods/AlphaMemesBiotech</li>
+    <li IfModActiveAll="Sarg.AlphaMemes,ferny.progressionagriculture">Mods/AlphaMemesProgressionAgriculture</li>
     <li IfModActive="OskarPotocki.VanillaVehiclesExpanded">Mods/VanillaVehiclesExpanded</li>
     <li IfModActive="VanillaExpanded.VGeneticsE">Mods/VanillaGeneticsExpanded</li>
   </v1.6>
@@ -18,8 +25,14 @@
     <li>/</li>
     <li>Common</li>
     <li>1.7</li>
+    <li IfModActive="Ludeon.RimWorld.Biotech">Mods/Biotech</li>
+    <li IfModActive="Ludeon.RimWorld.Anomaly">Mods/Anomaly</li>
+    <li IfModActive="Ludeon.RimWorld.Odyssey">Mods/Odyssey</li>
     <li IfModActive="VanillaExpanded.VMemesE">Mods/VanillaIdeologyExpanded</li>
+    <li IfModActiveAll="VanillaExpanded.VMemesE,ferny.noderesearch">Mods/VanillaIdeologyExpandedNodeResearch</li>
     <li IfModActive="Sarg.AlphaMemes">Mods/AlphaMemes</li>
+    <li IfModActiveAll="Sarg.AlphaMemes,Ludeon.RimWorld.Biotech">Mods/AlphaMemesBiotech</li>
+    <li IfModActiveAll="Sarg.AlphaMemes,ferny.progressionagriculture">Mods/AlphaMemesProgressionAgriculture</li>
     <li IfModActive="OskarPotocki.VanillaVehiclesExpanded">Mods/VanillaVehiclesExpanded</li>
     <li IfModActive="VanillaExpanded.VGeneticsE">Mods/VanillaGeneticsExpanded</li>
   </v1.7>

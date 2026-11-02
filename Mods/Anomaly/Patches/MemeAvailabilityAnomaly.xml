@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <Operation Class="PatchOperationAddModExtension">
+    <xpath>Defs/MemeDef[defName="Ritualist"]</xpath>
+    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><requiredResearch><li>BasicPsychicRituals</li></requiredResearch></li></value>
+  </Operation>
+  <Operation Class="PatchOperationAddModExtension">
+    <xpath>Defs/MemeDef[defName="Inhuman"]</xpath>
+    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><requiredResearch><li>AdvancedPsychicRituals</li></requiredResearch></li></value>
+  </Operation>
+</Patch>

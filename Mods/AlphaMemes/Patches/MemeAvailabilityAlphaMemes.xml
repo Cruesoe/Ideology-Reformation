@@ -3,9 +3,9 @@
   Curated research gates for Alpha Memes 1.6.
 
   Only beliefs with a direct technological dependency are gated. Cultural,
-  ethical and spiritual Alpha Memes remain unrestricted. The Biotech entries
-  are skipped unless that expansion is active; Alpha Memes uses the same
-  condition for defining those memes.
+  ethical and spiritual Alpha Memes remain unrestricted. Gates that need
+  Biotech or Progression: Agriculture are in Mods/AlphaMemesBiotech and
+  Mods/AlphaMemesProgressionAgriculture.
 -->
 <Patch>
   <Operation Class="PatchOperationAddModExtension">
@@ -35,17 +35,5 @@
   <Operation Class="PatchOperationAddModExtension">
     <xpath>Defs/MemeDef[defName="AM_WaterPrimacy"]</xpath>
     <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><requiredResearch><li>Hydroponics</li></requiredResearch></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension" MayRequire="Ludeon.RimWorld.Biotech">
-    <xpath>Defs/MemeDef[defName="AM_Fertility"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><requiredResearch><li>FertilityProcedures</li></requiredResearch></li></value>
-  </Operation>
-  <Operation Class="PatchOperationAddModExtension" MayRequire="Ludeon.RimWorld.Biotech">
-    <xpath>Defs/MemeDef[defName="AM_VampireHunting"]</xpath>
-    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><requiredResearch><li>Deathrest</li></requiredResearch></li></value>
-  </Operation>
-  <!-- Progression: Agriculture removes the Devilstrand research definition. -->
-  <Operation Class="PatchOperationRemove" MayRequire="ferny.progressionagriculture">
-    <xpath>Defs/MemeDef[defName="AM_DeepDevotion"]/startingResearchProjects/li[text()="Devilstrand"]</xpath>
   </Operation>
 </Patch>
