@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using HarmonyLib;
 using RimWorld;
 using UnityEngine;
@@ -6,23 +7,22 @@ using IdeologyReformation.Restrictions;
 
 namespace IdeologyReformation.Patches;
 
-/// <summary>
-/// Draws memes gated by <see cref="MemeAvailabilityExtension"/> as locked in the meme picker
-/// (initial ideo creation, fluid ideo setup, and reform): dimmed, inert to clicks, and carrying a
-/// tooltip naming the requirement. The tile stays in the grid so the requirement is discoverable
-/// rather than the meme silently not existing.
-/// </summary>
+/// <summary>Draws research-locked memes in the meme picker dimmed, inert and with a tooltip naming the requirement.</summary>
 [HarmonyPatch(typeof(Dialog_ChooseMemes), "DrawMeme")]
 internal static class MemeLockVisualPatch
 {
     private static readonly AccessTools.FieldRef<Dialog_ChooseMemes, Ideo> IdeoRef =
         AccessTools.FieldRefAccess<Dialog_ChooseMemes, Ideo>("ideo");
 
+    // Lock reasons for the open picker; research can't change while the modal dialog is open.
+    private static readonly Dictionary<MemeDef, string?> lockReasons = new();
+    private static Dialog_ChooseMemes? lockReasonsDialog;
+
     [HarmonyPrefix]
     private static void Prefix(Dialog_ChooseMemes __instance, MemeDef meme, Rect memeBox, out string? __state)
     {
         // A meme the ideoligion already has stays selectable so it can be removed.
-        __state = IdeoRef(__instance)?.memes.Contains(meme) == true ? null : MemeAvailabilityUtility.LockedReason(meme);
+        __state = IdeoRef(__instance)?.memes.Contains(meme) == true ? null : LockedReason(__instance, meme);
         if (__state == null)
         {
             return;
@@ -47,21 +47,21 @@ internal static class MemeLockVisualPatch
         Widgets.DrawRectFast(memeBox, new Color(0.10f, 0.10f, 0.10f, 0.62f));
         TooltipHandler.TipRegion(memeBox, __state);
     }
-}
 
-/// <summary>
-/// Applies the same gate to <see cref="IdeoUtility"/>'s random meme generation for the player's
-/// ideoligion (starting scenarios and "Randomize"). Other factions' ideoligions are not gated.
-/// </summary>
-[HarmonyPatch(typeof(IdeoUtility), "CanAdd")]
-internal static class MemeAvailabilityRandomizationPatch
-{
-    [HarmonyPostfix]
-    private static void Postfix(MemeDef meme, FactionDef? forFaction, ref bool __result)
+    private static string? LockedReason(Dialog_ChooseMemes dialog, MemeDef meme)
     {
-        if (__result && (forFaction == null || forFaction.isPlayer) && !MemeAvailabilityUtility.IsMemeAvailable(meme))
+        if (lockReasonsDialog != dialog)
         {
-            __result = false;
+            lockReasons.Clear();
+            lockReasonsDialog = dialog;
         }
+
+        if (!lockReasons.TryGetValue(meme, out string? reason))
+        {
+            reason = MemeAvailabilityUtility.LockedReason(meme);
+            lockReasons[meme] = reason;
+        }
+
+        return reason;
     }
 }

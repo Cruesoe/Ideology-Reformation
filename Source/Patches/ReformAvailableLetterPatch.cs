@@ -8,11 +8,7 @@ using IdeologyReformation.Restrictions;
 
 namespace IdeologyReformation.Patches;
 
-/// <summary>
-/// Replaces vanilla's "you can reform your ideoligion" letter with this mod's own text, and appends
-/// a note listing memes that became available (per <see cref="MemeAvailabilityTracker"/>) since
-/// the last such letter for any ideo in this save.
-/// </summary>
+/// <summary>Replaces vanilla's reform-ready letter text with this mod's, listing memes that became available since the last letter.</summary>
 [HarmonyPatch(typeof(IdeoDevelopmentTracker), nameof(IdeoDevelopmentTracker.TryAddDevelopmentPoints))]
 internal static class ReformAvailableLetterPatch
 {

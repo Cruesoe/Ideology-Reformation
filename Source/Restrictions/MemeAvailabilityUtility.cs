@@ -22,7 +22,7 @@ public static class MemeAvailabilityUtility
         }
 
         List<string> missing = restriction.requiredResearch?
-            .Where(project => !project.IsFinished)
+            .Where(project => !IsFinished(project))
             .Select(project => project.LabelCap.ToString())
             .ToList() ?? new List<string>();
 
@@ -34,7 +34,7 @@ public static class MemeAvailabilityUtility
                     DefName = defName,
                     Project = DefDatabase<ResearchProjectDef>.GetNamedSilentFail(defName)
                 })
-                .Where(requirement => requirement.Project == null || !requirement.Project.IsFinished)
+                .Where(requirement => requirement.Project == null || !IsFinished(requirement.Project))
                 .Select(requirement => requirement.Project?.LabelCap.ToString() ?? requirement.DefName));
         }
 
@@ -45,4 +45,6 @@ public static class MemeAvailabilityUtility
 
         return null;
     }
+
+    private static bool IsFinished(ResearchProjectDef project) => project.IsFinished || StartingResearch.Grants(project);
 }

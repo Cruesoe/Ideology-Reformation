@@ -5,12 +5,7 @@ using Verse;
 
 namespace IdeologyReformation.Restrictions;
 
-/// <summary>
-/// Remembers which memes were available (per <see cref="MemeAvailabilityUtility"/>) as of the
-/// last time it was asked, so callers can report which memes newly became available since then
-/// (typically: since the last "you can reform your ideoligion" letter). Tracking is global for
-/// the save, not per-ideo, since availability only depends on colony-wide tech/research state.
-/// </summary>
+/// <summary>Remembers which memes were available at the last reform letter, so the next letter can list the newly available ones.</summary>
 public class MemeAvailabilityTracker : GameComponent
 {
     private List<string> knownAvailableMemeDefNames = new();
@@ -29,16 +24,28 @@ public class MemeAvailabilityTracker : GameComponent
         Scribe_Collections.Look(ref knownAvailableMemeDefNames, "fio_knownAvailableMemes", LookMode.Value);
         if (Scribe.mode == LoadSaveMode.PostLoadInit)
         {
+            // An empty list means no baseline was recorded; unrestricted memes are always available.
             knownAvailableMemeDefNames ??= new List<string>();
-            initialized = true;
+            initialized = knownAvailableMemeDefNames.Count > 0;
         }
     }
 
-    /// <summary>
-    /// Returns memes that are available now but were not the last time this was called (or, on
-    /// the very first call in a save, an empty list - there is nothing to compare against yet).
-    /// Advances the remembered baseline to the current state as a side effect.
-    /// </summary>
+    // Baseline at colony start, after the scenario's starting research is applied.
+    public override void StartedNewGame()
+    {
+        ComputeNewlyAvailableAndAdvance();
+    }
+
+    // Baseline when the mod is added to an existing save.
+    public override void LoadedGame()
+    {
+        if (!initialized)
+        {
+            ComputeNewlyAvailableAndAdvance();
+        }
+    }
+
+    /// <summary>Returns memes available now that weren't at the last call (none on the first call), and records the current set.</summary>
     public List<MemeDef> ComputeNewlyAvailableAndAdvance()
     {
         List<MemeDef> currentlyAvailable = DefDatabase<MemeDef>.AllDefsListForReading

@@ -4,21 +4,12 @@ using Verse;
 
 namespace IdeologyReformation.Restrictions;
 
-/// <summary>
-/// Optional <see cref="DefModExtension"/> for <see cref="MemeDef"/>. Any mod can attach this
-/// (via its own def, or an XML patch onto a vanilla/other mod's MemeDef) to gate that meme
-/// behind finished research, without needing a reference to this mod's assembly.
-/// Absence of the extension means the meme is unrestricted.
-/// </summary>
+/// <summary>Gates a <see cref="MemeDef"/> behind finished research; any mod can add it by XML patch.</summary>
 public class MemeAvailabilityExtension : DefModExtension
 {
-    /// <summary>Meme requires all of these research projects to be finished. Leave null/empty for none.</summary>
+    /// <summary>Every listed project must be finished.</summary>
     public List<ResearchProjectDef>? requiredResearch;
 
-    /// <summary>
-    /// Meme requires all research projects with these def names to be finished. This supports
-    /// projects generated after XML cross-reference resolution, such as Node Research's
-    /// Emergence projects.
-    /// </summary>
+    /// <summary>Every project with these def names must be finished; for projects generated after cross-references resolve, such as Node Research's.</summary>
     public List<string>? requiredResearchDefNames;
 }

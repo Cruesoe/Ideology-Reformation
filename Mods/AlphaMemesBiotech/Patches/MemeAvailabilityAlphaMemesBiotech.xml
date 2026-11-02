@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  <!-- Alpha Memes defines these memes only when Biotech is active. -->
+  <Operation Class="PatchOperationAddModExtension">
+    <xpath>Defs/MemeDef[defName="AM_Fertility"]</xpath>
+    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><requiredResearch><li>FertilityProcedures</li></requiredResearch></li></value>
+  </Operation>
+  <Operation Class="PatchOperationAddModExtension">
+    <xpath>Defs/MemeDef[defName="AM_VampireHunting"]</xpath>
+    <value><li Class="IdeologyReformation.Restrictions.MemeAvailabilityExtension"><requiredResearch><li>Deathrest</li></requiredResearch></li></value>
+  </Operation>
+</Patch>

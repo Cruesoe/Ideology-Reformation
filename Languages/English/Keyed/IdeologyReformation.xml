@@ -15,6 +15,7 @@
   <IR_NoObjectSelected>No mechanical reform object selected. Cosmetic edits remain free.</IR_NoObjectSelected>
   <IR_SelectedObject>Selected reform object: {0}. Other deliberate objects are locked.</IR_SelectedObject>
   <IR_LockedMemeTip>This reform is locked to {0}. This meme cannot be added or removed until the reform is reset or confirmed.</IR_LockedMemeTip>
+  <IR_LockedObjectTip>This reform is locked to {0}. Reset or confirm it before changing anything else.</IR_LockedObjectTip>
   <IR_MemeLockedResearch>Locked until researched: {0}.</IR_MemeLockedResearch>
   <IR_ResearchUnlockMeme>Meme: {0}</IR_ResearchUnlockMeme>
   <IR_ResetComplete>All reform changes were discarded.</IR_ResetComplete>
